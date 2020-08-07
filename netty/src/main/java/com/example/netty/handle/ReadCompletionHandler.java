@@ -1,5 +1,7 @@
 package com.example.netty.handle;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
@@ -9,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
+@Slf4j
 public class ReadCompletionHandler implements CompletionHandler<Integer, ByteBuffer> {
 
     private AsynchronousSocketChannel channel;
@@ -25,7 +28,7 @@ public class ReadCompletionHandler implements CompletionHandler<Integer, ByteBuf
         byte[] body = new byte[byteNum];
         readBuffer.get(body);
         String req = new String(body, StandardCharsets.UTF_8);
-        System.out.println("the time server received order: " + req);
+        log.info("the time server received order: " + req);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = "query time order".equalsIgnoreCase(req) ? format.format(new Date()) + "" : "bad order";
         doWrite(currentTime);

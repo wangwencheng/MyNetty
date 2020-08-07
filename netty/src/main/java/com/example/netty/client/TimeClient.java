@@ -1,12 +1,14 @@
 package com.example.netty.client;
 
 import com.example.netty.handle.ClientConnectionCompletionHandler;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.util.concurrent.CountDownLatch;
 
+@Slf4j
 public class TimeClient {
 
     private String host;
@@ -36,7 +38,7 @@ public class TimeClient {
         while (true) {
             new Thread(() -> {
                 try {
-                    System.out.println("time client thread: " + Thread.currentThread());
+                    log.info("time client thread: " + Thread.currentThread());
                     TimeClient client = new TimeClient("localhost", 8088);
                     client.latch.await();
                 } catch (IOException | InterruptedException e) {

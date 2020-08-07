@@ -38,8 +38,8 @@ public class TimeServer implements Runnable {
 
 
     public static void main(String[] args) {
-        System.out.println("我是主线程：" + Thread.currentThread());
+        log.info("我是主线程：" + Thread.currentThread());
         new TimeServer(8088).run();
-        System.out.println("监听线程已挂");
+        log.info("监听线程已挂");
     }
 }

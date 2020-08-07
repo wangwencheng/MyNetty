@@ -2,6 +2,7 @@ package com.example.netty.handle;
 
 import com.example.netty.entity.BufferAndArr;
 import com.google.common.primitives.Bytes;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class ClientReadCompletionHandler implements CompletionHandler<Integer, BufferAndArr> {
     /**
      * 异步socket通道
@@ -24,7 +26,7 @@ public class ClientReadCompletionHandler implements CompletionHandler<Integer, B
 
     @Override
     public void completed(Integer bytesNum, BufferAndArr attachment) {
-        System.out.println("read thread: " + Thread.currentThread());
+        log.info("read thread: " + Thread.currentThread());
         int size = attachment.buffer.limit();
         attachment.buffer.flip();
         byte[] tempBytes = new byte[bytesNum];
@@ -51,7 +53,7 @@ public class ClientReadCompletionHandler implements CompletionHandler<Integer, B
     }
 
     private void completionAction(List<Byte> bytesArr) {
-        System.out.println("当前时间：" + new String(Bytes.toArray(bytesArr), StandardCharsets.UTF_8));
+        log.info("当前时间：" + new String(Bytes.toArray(bytesArr), StandardCharsets.UTF_8));
         latch.countDown();
     }
 }
